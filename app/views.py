@@ -12,6 +12,9 @@ def index_page(request):
 def home(request):
     images = services.getAllImages()
     favourite_list = []
+    
+    if request.user.is_authenticated:
+        favourite_list = services.getAllFavourites(request) # si el usuario está logueado, se obtiene el listado de favoritos.
 
     return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
 
@@ -23,6 +26,9 @@ def search(request):
     if (name != ''):
         images = services.filterByCharacter(name)
         favourite_list = []
+        
+        if request.user.is_authenticated:
+            favourite_list = services.getAllFavourites(request) # si el usuario está logueado, se obtiene el listado de favoritos.
 
         return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
     else:
@@ -35,6 +41,9 @@ def filter_by_type(request):
     if type != '':
         images = services.filterByType(type) # debe traer un listado filtrado de imágenes, segun si es o contiene ese tipo.
         favourite_list = []
+        
+        if request.user.is_authenticated:
+            favourite_list = services.getAllFavourites(request) # si el usuario está logueado, se obtiene el listado de favoritos.
 
         return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
     else:
@@ -43,15 +52,25 @@ def filter_by_type(request):
 # Estas funciones se usan cuando el usuario está logueado en la aplicación.
 @login_required
 def getAllFavouritesByUser(request):
-    pass
+    favourite_list = services.getAllFavourites(request)
+    return render(request, 'favourites.html', {'favourite_list': favourite_list}) # Esta función se usa para obtener el listado de favoritos y mostrarlo en el template 'favourites.html'.
 
 @login_required
 def saveFavourite(request):
-    pass
+    result = services.saveFavourite(request)
+    if result:
+        return redirect('home')
+    else:
+        # Manejar error si es necesario
+        return redirect('home') # Esta función se usa para guardar un favorito en la base de datos.
 
 @login_required
 def deleteFavourite(request):
-    pass
+    result = services.deleteFavourite(request)
+    if result:
+        return redirect('favoritos')
+    else:
+        return redirect('favoritos') # Esta función se usa para eliminar un favorito de la base de datos.
 
 @login_required
 def exit(request):
