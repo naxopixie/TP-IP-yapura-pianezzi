@@ -8,31 +8,43 @@ from django.contrib.auth import get_user
 
 # función que devuelve un listado de cards. Cada card representa una imagen de la API de Pokemon
 def getAllImages():
+    imagenescrudas = transport.getAllImages()
+    
     # debe ejecutar los siguientes pasos:
     # 1) traer un listado de imágenes crudas desde la API (ver transport.py)
+    listaImagenes = [] 
     # 2) convertir cada img. en una card.
+    for imagen in imagenescrudas:
+        card = translator.fromRequestIntoCard(imagen)
+        listaImagenes.append(card)
     # 3) añadirlas a un nuevo listado que, finalmente, se retornará con todas las card encontradas.
-    pass
+    return listaImagenes
 
 # función que filtra según el nombre del pokemon.
 def filterByCharacter(name):
+    todaslascartas = transport.getAllImages()
     filtered_cards = []
 
-    for card in getAllImages():
-        # debe verificar si el name está contenido en el nombre de la card, antes de agregarlo al listado de filtered_cards.
-        filtered_cards.append(card)
+    for cartas in todaslascartas:
+        card = translator.fromRequestIntoCard(cartas)
+        if name.lower() in card.name.lower():
+            filtered_cards.append(card)
 
     return filtered_cards
 
 # función que filtra las cards según su tipo.
 def filterByType(type_filter):
-    filtered_cards = []
+    todaslascartas = transport.getAllImages()
+    cartasfiltradas = []
 
-    for card in getAllImages():
+    for cartas in todaslascartas:
         # debe verificar si la casa de la card coincide con la recibida por parámetro. Si es así, se añade al listado de filtered_cards.
-        filtered_cards.append(card)
+        card = translator.fromRequestIntoCard(cartas)
+        for type in card.types:
+            if type_filter.lower() == type.lower():
+                cartasfiltradas.append(card)
 
-    return filtered_cards
+    return cartasfiltradas
 
 # añadir favoritos (usado desde el template 'home.html')
 def saveFavourite(request):
