@@ -36,6 +36,10 @@
         <h2 class="text-center">La búsqueda no arrojó resultados...</h2>
         {% else %} {% for img in images %}
         <div class="col">
+
+
+
+
             <!-- evaluar si la imagen pertenece al tipo fuego, agua o planta -->
             <div class= "card mb-3 ms-5 {% if 'fire' in img.types %}border-danger{% elif 'water' in img.types %}border-primary{% elif 'grass' in img.types %}border-success{%else%}border-warning{% endif %}" style="max-width: 540px; ">
                  <div class="row g-0">
@@ -58,6 +62,10 @@
                             <p class="card-text"><small class="text-body-secondary">Peso: {{ img.weight }}</small></p>
                             <p class="card-text"><small class="text-body-secondary">Nivel de experiencia base: {{ img.base }}</small></p>
                         </div>
+
+
+
+                        
                         {% if request.user.is_authenticated %}
                         <div class="card-footer text-center">
                             <form method="post" action="{% url 'agregar-favorito' %}">

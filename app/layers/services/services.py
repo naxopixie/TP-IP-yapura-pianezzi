@@ -8,25 +8,23 @@ from django.contrib.auth import get_user
 
 # función que devuelve un listado de cards. Cada card representa una imagen de la API de Pokemon
 def getAllImages():
-    imagenescrudas = transport.getAllImages()
-    
-    # debe ejecutar los siguientes pasos:
+    listaCards = []
     # 1) traer un listado de imágenes crudas desde la API (ver transport.py)
-    listaImagenes = [] 
+    rawImages = transport.getAllImages()
+
     # 2) convertir cada img. en una card.
-    for imagen in imagenescrudas:
-        card = translator.fromRequestIntoCard(imagen)
-        listaImagenes.append(card)
+    for rawImage in rawImages:
+        card = translator.fromRequestIntoCard(rawImage)
+        listaCards.append(card)
     # 3) añadirlas a un nuevo listado que, finalmente, se retornará con todas las card encontradas.
-    return listaImagenes
+    return listaCards
 
 # función que filtra según el nombre del pokemon.
 def filterByCharacter(name):
-    todaslascartas = transport.getAllImages()
     filtered_cards = []
+    cards = getAllImages()
 
-    for cartas in todaslascartas:
-        card = translator.fromRequestIntoCard(cartas)
+    for card in cards:
         if name.lower() in card.name.lower():
             filtered_cards.append(card)
 
@@ -34,17 +32,16 @@ def filterByCharacter(name):
 
 # función que filtra las cards según su tipo.
 def filterByType(type_filter):
-    todaslascartas = transport.getAllImages()
-    cartasfiltradas = []
+    filtered_cards = []
+    cards = getAllImages()
 
-    for cartas in todaslascartas:
+    for card in cards:
         # debe verificar si la casa de la card coincide con la recibida por parámetro. Si es así, se añade al listado de filtered_cards.
-        card = translator.fromRequestIntoCard(cartas)
         for type in card.types:
             if type_filter.lower() == type.lower():
-                cartasfiltradas.append(card)
+                filtered_cards.append(card)
 
-    return cartasfiltradas
+    return filtered_cards
 
 # añadir favoritos (usado desde el template 'home.html')
 def saveFavourite(request):
