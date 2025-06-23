@@ -1,4 +1,5 @@
-class Card:
+# Una clase es un conjunto de atributos y métodos que se utilizan para representar un objeto. Por ejemplo, si queremos el peso de la card, se debe usar el atributo self.weight.
+class Card: 
     def __init__(self, name, height, base, weight, image, types, user=None, id=None):
         self.name = name  # Nombre del pokemon
         self.height = height  # ALTURA

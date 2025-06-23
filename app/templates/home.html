@@ -40,9 +40,10 @@
 
 
 
-            <!-- evaluar si la imagen pertenece al tipo fuego, agua o planta -->
+            <!-- evaluar si la imagen pertenece al tipo fuego, agua o planta, usamos el atributo types si 'fire' esta en la variable o lista de tipos, entonces pone un border-danger(rojo)-->
+            <!-- la class card mb-3 ms-5 da un formato a una carta con un margen inferior 3 y izquierdo 5-->
             <div class= "card mb-3 ms-5 {% if 'fire' in img.types %}border-danger{% elif 'water' in img.types %}border-primary{% elif 'grass' in img.types %}border-success{%else%}border-warning{% endif %}" style="max-width: 540px; ">
-                 <div class="row g-0">
+                <div class="row g-0">
                      <div class="col-md-4">
                          <img src="{{ img.image }}" class="card-img-top"alt="imagen">
                      </div>

@@ -10,44 +10,44 @@ def index_page(request):
 
 # esta función obtiene 2 listados: uno de las imágenes de la API y otro de favoritos, ambos en formato Card, y los dibuja en el template 'home.html'.
 def home(request):
-    images = services.getAllImages()
+    images = services.getAllImages() # Esto retorna un listado de cards. Ejemplo: [Card(id=1, name='bulbasaur', base=64, types=['grass', 'poison']), Card(id=2, name='ivysaur', base=142, types=['grass', 'poison']), Card(id=3, name='venusaur', base=236, types=['grass', 'poison'])]
     favourite_list = []
     
-    if request.user.is_authenticated:
+    if request.user.is_authenticated: # Esto verifica si el usuario está logueado.
         favourite_list = services.getAllFavourites(request) # si el usuario está logueado, se obtiene el listado de favoritos.
 
-    return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
+    return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list }) # Esto renderiza el template 'home.html' con los listados de cards y favoritos.
 
 # función utilizada en el buscador.
 def search(request):
-    name = request.POST.get('query', '')
+    name = request.POST.get('query', '') # Esto obtiene el nombre del pokemon ingresado por el usuario.
 
     # si el usuario ingresó algo en el buscador, se deben filtrar las imágenes por dicho ingreso.
-    if (name != ''):
-        images = services.filterByCharacter(name)
+    if (name != ''): # Esto verifica si el usuario ingresó algo en el buscador.
+        images = services.filterByCharacter(name) # Esto filtra las cards por el nombre del pokemon.
         favourite_list = []
         
-        if request.user.is_authenticated:
+        if request.user.is_authenticated: # Esto verifica si el usuario está logueado.
             favourite_list = services.getAllFavourites(request) # si el usuario está logueado, se obtiene el listado de favoritos.
 
-        return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
+        return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list }) # Esto renderiza el template 'home.html' con los listados de cards y favoritos.
     else:
-        return redirect('home')
+        return redirect('home') # Esto redirige a la página de inicio, ya que no se ingresó nada en el buscador.
 
 # función utilizada para filtrar por el tipo del Pokemon
 def filter_by_type(request):
-    type = request.POST.get('type', '')
+    type = request.POST.get('type', '') # Esto obtiene el tipo del pokemon ingresado por el usuario.
 
-    if type != '':
+    if type != '': # Esto verifica si el usuario ingresó algo en el buscador.
         images = services.filterByType(type) # debe traer un listado filtrado de imágenes, segun si es o contiene ese tipo.
         favourite_list = []
         
-        if request.user.is_authenticated:
+        if request.user.is_authenticated: # Esto verifica si el usuario está logueado.
             favourite_list = services.getAllFavourites(request) # si el usuario está logueado, se obtiene el listado de favoritos.
 
-        return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
+        return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list }) # Esto renderiza el template 'home.html' con los listados de cards y favoritos.
     else:
-        return redirect('home')
+        return redirect('home') # Esto redirige a la página de inicio, ya que no se ingresó nada en el buscador.
 
 # Estas funciones se usan cuando el usuario está logueado en la aplicación.
 @login_required
