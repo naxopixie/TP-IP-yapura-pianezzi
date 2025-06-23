@@ -1,7 +1,21 @@
 body {
-    color: #566787;
-    background: #f5f5f5;
-    font-family: 'Roboto', sans-serif;
+    color: #9e0808; 
+    background: #000000; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to right,
+      #000000,
+      #eee7e7
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    height: 100vh;
+    background: url(pokeballs.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    margin: 10px;
 }
 
 .table-responsive {
