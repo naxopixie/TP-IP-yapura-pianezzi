@@ -45,6 +45,8 @@ def filterByType(type_filter): #type_filter = 'grass'
     return filtered_cards # Esto retorna un listado de cards filtrados. Ejemplo: [Card(id=1, name='bulbasaur', base=64, types=['grass', 'poison']), Card(id=2, name='ivysaur', base=142, types=['grass', 'poison']), Card(id=3, name='venusaur', base=236, types=['grass', 'poison'])]
 
 # añadir favoritos (usado desde el template 'home.html')
+
+# ---- Empezamos la implementacion de favoritos desde esta seccion ----
 def saveFavourite(request):
     fav = translator.fromTemplateIntoCard(request) # transformamos un request en una Card (ver translator.py). fromTemplateIntoCard es una función que convierte un request en una Card.
     fav.user = get_user(request) # le asignamos el usuario correspondiente.

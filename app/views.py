@@ -12,11 +12,13 @@ def index_page(request):
 def home(request):
     images = services.getAllImages() # Esto retorna un listado de cards. Ejemplo: [Card(id=1, name='bulbasaur', base=64, types=['grass', 'poison']), Card(id=2, name='ivysaur', base=142, types=['grass', 'poison']), Card(id=3, name='venusaur', base=236, types=['grass', 'poison'])]
     favourite_list = []
+    favourite_list_ids = []
     
     if request.user.is_authenticated: # Esto verifica si el usuario está logueado.
         favourite_list = services.getAllFavourites(request) # si el usuario está logueado, se obtiene el listado de favoritos.
+        favourite_list_ids = [fav.id for fav in favourite_list]
 
-    return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list }) # Esto renderiza el template 'home.html' con los listados de cards y favoritos.
+    return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list, 'favourite_list_ids': favourite_list_ids }) # Esto renderiza el template 'home.html' con los listados de cards y favoritos.
 
 # función utilizada en el buscador.
 def search(request):
@@ -26,11 +28,13 @@ def search(request):
     if (name != ''): # Esto verifica si el usuario ingresó algo en el buscador.
         images = services.filterByCharacter(name) # Esto filtra las cards por el nombre del pokemon.
         favourite_list = []
+        favourite_list_ids = []
         
         if request.user.is_authenticated: # Esto verifica si el usuario está logueado.
             favourite_list = services.getAllFavourites(request) # si el usuario está logueado, se obtiene el listado de favoritos.
+            favourite_list_ids = [fav.id for fav in favourite_list]
 
-        return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list }) # Esto renderiza el template 'home.html' con los listados de cards y favoritos.
+        return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list, 'favourite_list_ids': favourite_list_ids }) # Esto renderiza el template 'home.html' con los listados de cards y favoritos.
     else:
         return redirect('home') # Esto redirige a la página de inicio, ya que no se ingresó nada en el buscador.
 
@@ -41,11 +45,13 @@ def filter_by_type(request):
     if type != '': # Esto verifica si el usuario ingresó algo en el buscador.
         images = services.filterByType(type) # debe traer un listado filtrado de imágenes, segun si es o contiene ese tipo.
         favourite_list = []
+        favourite_list_ids = []
         
         if request.user.is_authenticated: # Esto verifica si el usuario está logueado.
             favourite_list = services.getAllFavourites(request) # si el usuario está logueado, se obtiene el listado de favoritos.
+            favourite_list_ids = [fav.id for fav in favourite_list]
 
-        return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list }) # Esto renderiza el template 'home.html' con los listados de cards y favoritos.
+        return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list, 'favourite_list_ids': favourite_list_ids }) # Esto renderiza el template 'home.html' con los listados de cards y favoritos.
     else:
         return redirect('home') # Esto redirige a la página de inicio, ya que no se ingresó nada en el buscador.
 
